@@ -68,12 +68,41 @@ public class Strings {
 
      }
 
+     public static String compress(String str){
+        String newStr="";
+        for(int i=0;i<str.length();i++){
+            Integer count =1;
+            while(i<str.length()-1 && str.charAt(i)== str.charAt(i+1)){
+                count++;
+                i++;
+            }
+            newStr += str.charAt(i);
+            if(count>1){
+                newStr += count.toString();
+            }
+        }
+        return newStr;
+     }
+
+     public static int vowelCount(String str){
+        int count =0;
+        for(int i=0;i<str.length();i++){
+           String vowels = "aeiou";
+           for(int j=0;j<vowels.length();j++){
+            if(str.charAt(i)==vowels.charAt(j)){
+                count++;
+            }
+           }
+        }
+        return count;
+     }
+
     public static void main(String args[]){
         String path = "WEENWSSE";
         String snacks[] = {"apple","kurkure", "momo", "avocado"};
        
         String str = "hello, i'm aakriti";
-        System.out.println(toUpperCase(str));
+        System.out.println(vowelCount(str));
      
 
 
