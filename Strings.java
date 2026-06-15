@@ -123,13 +123,29 @@ public class Strings {
 
      }
 
+     public static void reverseString(char [] s){
+          int left = 0;
+      int right = s.length-1;
+      while(left<right){
+        char temp = s[left];
+        s[left] =  s[right];
+         s[right] = temp;
+
+        left++;
+        right--;
+      }
+     }
+
     public static void main(String args[]){
         String path = "WEENWSSE";
         String snacks[] = {"apple","kurkure", "momo", "avocado"};
        
         String str1 = "heart";
-        String str2 = "earthy";
-        isAnagrams(str1, str2);
+        // String str2 = "earthy";
+        // isAnagrams(str1, str2);
+        char [] string1 = {'a','b','c','d'};
+        reverseString(string1);
+        System.out.print(string1);
      
 
 
