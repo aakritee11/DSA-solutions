@@ -116,9 +116,75 @@ public  static int gridWays(int i, int j, int n,int m){
   return w1+w2;
 }
 
+public static boolean isSafe(int sudoku[][],int row,int col,int digit){
+  //row check
+  for(int i=0;i<=8;i++){
+    if(sudoku[row][i]==digit){
+      return false;
+    }
+  }
+  //col check
+   for(int j=0;j<=8;j++){
+    if(sudoku[j][col]==digit){
+      return false;
+    }
+  }
+
+  // grid check startingRow = (row/3)*3 , startingCol = (col/3)*3
+
+  int startingRow = (row/3)*3;
+  int startingCol = (col/3)*3;
+
+  for(int i=startingRow;i<startingRow+3;i++){
+    for(int j=startingCol;j<startingCol+3;j++){
+      if(sudoku[i][j]==digit){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 //Sudoku
+ public static boolean sudokuSolver(int sudoku[][], int row, int col){
+  //baseCase
+  if(row==9 && col==0){
+    return  true;
 
+  }
 
+  //recursion
+  int nextRow = row, nextCol = col+1;
+  if(col+1==9){
+    nextRow = row+1;
+    nextCol= 0;
+  }
+
+  if(sudoku[row][col] !=0){
+  return  sudokuSolver(sudoku, nextRow, nextCol);
+  }
+
+  for(int digit=1; digit<=9; digit++){
+     if(isSafe(sudoku,row,col,digit)){
+       sudoku[row][col] = digit;
+       if( sudokuSolver(sudoku, nextRow, nextCol)){
+         return true;
+      }
+      sudoku[row][col] = 0;
+     }
+  }
+ 
+  return  false;
+ }
+
+ public static void printSudoku(int sudoku[][]){
+  for(int i=0;i<9;i++){
+    for(int j=0;j<9;j++){
+      System.out.print(sudoku[i][j]+ " ");
+    }
+    System.out.println();
+  }
+ }
 
 
     public static void main(String args[]){
@@ -150,8 +216,28 @@ public  static int gridWays(int i, int j, int n,int m){
 
 
 
-int x=3, m =3;
-System.out.println(gridWays(0, 0, x, m));
+// int x=3, m =3;
+// System.out.println(gridWays(0, 0, x, m));
+
+
+int sudoku[][] ={
+    {5,3,0,0,7,0,0,0,0},
+    {6,0,0,1,9,5,0,0,0},
+    {0,9,8,0,0,0,0,6,0},
+    {8,0,0,0,6,0,0,0,3},
+    {4,0,0,8,0,3,0,0,1},
+    {7,0,0,0,2,0,0,0,6},
+    {0,6,0,0,0,0,2,8,0},
+    {0,0,0,4,1,9,0,0,5},
+    {0,0,0,0,8,0,0,7,9}
+};
+
+if(sudokuSolver(sudoku, 0, 0)){
+  System.out.println("solution exists");
+  printSudoku(sudoku);
+}else{
+   System.out.print("solution doesnot exist");
+}
 
     }
 }
